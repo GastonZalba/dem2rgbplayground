@@ -14,5 +14,3 @@ También permite procesar rápidamente un geotiff DEM a formato RGB usando esas 
 
 - Procesar DEM:
     - Para hacer una previsualización rápida de cómo se vería un DEM: `python demtorgb.py mapbox|terrarium [INPUT_FILE]`, lo cual generará un archivo output.tif con la codificación seleccionada.
-
-Los RGB se exportan en GTiff usando compresión `JPEG`. Esta configuración es 30% más liviana que usando `deflate` y no distorsiona los valores (siempre y cuando `JPEG_QUALITY` esté en 100).

@@ -2,6 +2,7 @@ import sys
 import rasterio
 import numpy as np
 from osgeo import gdal
+from rasterio.enums import Resampling
 
 TEST_VALUE = 15.12345
 
@@ -53,20 +54,16 @@ else:
 meta = {
     **meta,
     'dtype': rasterio.uint8,
-    'nodata': 0,
-    'count': 3,
-    
-    # 'compress': 'deflate',
-
-    # JPEG in 100 quality doesn't mess pixel values, and is an 30% smaller than deflate
-    'compress': 'JPEG',
-    'jpeg_quality': 100
+    'nodata': None,
+    'count': 3,    
+    'compress': 'deflate'
 }
 
 with rasterio.open(OUTPUT, 'w', **meta) as dst:
     dst.write_band(1, r.astype(rasterio.uint8))
     dst.write_band(2, g.astype(rasterio.uint8))
     dst.write_band(3, b.astype(rasterio.uint8))
+    dst.build_overviews([2, 4, 8, 16, 32, 64, 128, 256], Resampling.average)
 
 # test file
 ds = gdal.Open(OUTPUT)
