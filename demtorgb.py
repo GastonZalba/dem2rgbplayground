@@ -1,3 +1,4 @@
+import os
 import sys
 import rasterio
 import numpy as np
@@ -7,13 +8,14 @@ from rasterio.enums import Resampling
 TEST_VALUE = 15.12345
 
 coding = sys.argv[1]
-file = sys.argv[2] if len(sys.argv) > 2 else None
+input = sys.argv[2] if len(sys.argv) > 2 else None
 
-OUTPUT = f'outfile_{coding}.tif'
+output_extension = os.path.splitext(input)[1]
+OUTPUT = f'outfile_{coding}{output_extension}'
 
-if file:
-    with rasterio.open(file) as src:
-        dem = src.read(1)
+if input:
+    with rasterio.open(input) as src:
+        dem = src.read(1, masked=True)
 else:
     # insert the test value as the first pixel in the output
     dem = np.array([[TEST_VALUE, -11000, -10000, -5000, -1000, -500, -100, -50, -10, -5, 0, 5, 10,
@@ -41,7 +43,7 @@ elif coding == 'terrarium':
     g += np.mod(dem, 256)
     b += np.floor((dem - np.floor(dem)) * 256)
 
-if file:
+if input:
     meta = src.meta
 else:
     meta = {
@@ -81,7 +83,7 @@ elif coding == 'terrarium':
 
 print('Coding:', coding)
 
-if file:
+if input:
     print('Exported file:', OUTPUT)
 else:
     print('Expected:', TEST_VALUE)

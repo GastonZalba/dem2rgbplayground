@@ -1,4 +1,4 @@
-# demtorgb
+# dem2rgbplayground
 Script para poder evaluar evaluar codificaciones RGB de modelos de terreno (DEM) [mapbox](https://docs.mapbox.com/data/tilesets/guides/access-elevation-data/) y [terrarium](https://www.mapzen.com/blog/terrain-tile-service/) y/o posibilitar la creación de ecuaciones customizadas. Está armado principalmente para testear los rangos de valores aceptados y resolución de cada una de éstas (a falta de una documentación clara), chequeando en prints valores de entrada y salida (tras codificación/decodificación). 
 
 También permite procesar rápidamente un geotiff DEM a formato RGB usando esas codificaciones.
